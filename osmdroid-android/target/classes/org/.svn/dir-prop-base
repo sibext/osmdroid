@@ -1,0 +1,9 @@
+K 13
+svn:mergeinfo
+V 307
+/branches/issue-43-jar/osmdroid-android/src/org:194-195
+/branches/issue-43-no-service/osmdroid-android/src/org:175-192
+/branches/issue-81-renderer-as-interface/osmdroid-android/src/org:328-353
+/branches/release_3_0_4/osmdroid-android/src/org:929-931
+/branches/v2/osmdroid-android/src/main/java/org:1306-1358
+END

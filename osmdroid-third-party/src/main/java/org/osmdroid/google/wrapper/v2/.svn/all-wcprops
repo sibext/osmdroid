@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/1392/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/wrapper/v2
+END
+GeoPoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/1361/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/wrapper/v2/GeoPoint.java
+END
+MapFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/1392/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/wrapper/v2/MapFactory.java
+END
+Projection.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/1361/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/wrapper/v2/Projection.java
+END
+MapWrapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/1377/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/wrapper/v2/MapWrapper.java
+END
+OsmdroidMapWrapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/!svn/ver/1383/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/wrapper/v2/OsmdroidMapWrapper.java
+END
+GoogleV1MapWrapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/!svn/ver/1383/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/wrapper/v2/GoogleV1MapWrapper.java
+END

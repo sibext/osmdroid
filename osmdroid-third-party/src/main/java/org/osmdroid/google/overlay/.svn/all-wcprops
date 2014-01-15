@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/1376/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/overlay
+END
+GooglePolylineOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/!svn/ver/1376/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/overlay/GooglePolylineOverlay.java
+END
+GoogleTilesOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/1082/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/overlay/GoogleTilesOverlay.java
+END
+GoogleItemizedOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/!svn/ver/1359/trunk/osmdroid-third-party/src/main/java/org/osmdroid/google/overlay/GoogleItemizedOverlay.java
+END

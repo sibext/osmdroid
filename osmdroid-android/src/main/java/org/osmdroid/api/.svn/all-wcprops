@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/1376/trunk/osmdroid-android/src/main/java/org/osmdroid/api
+END
+Polyline.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/1368/trunk/osmdroid-android/src/main/java/org/osmdroid/api/Polyline.java
+END
+IGeoPoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/1361/trunk/osmdroid-android/src/main/java/org/osmdroid/api/IGeoPoint.java
+END
+IPosition.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/1359/trunk/osmdroid-android/src/main/java/org/osmdroid/api/IPosition.java
+END
+IMapView.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/1045/trunk/osmdroid-android/src/main/java/org/osmdroid/api/IMapView.java
+END
+OnCameraChangeListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/1359/trunk/osmdroid-android/src/main/java/org/osmdroid/api/OnCameraChangeListener.java
+END
+Marker.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/1359/trunk/osmdroid-android/src/main/java/org/osmdroid/api/Marker.java
+END
+IProjection.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/1359/trunk/osmdroid-android/src/main/java/org/osmdroid/api/IProjection.java
+END
+IMap.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/1376/trunk/osmdroid-android/src/main/java/org/osmdroid/api/IMap.java
+END
+IMyLocationOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/1045/trunk/osmdroid-android/src/main/java/org/osmdroid/api/IMyLocationOverlay.java
+END
+IMapController.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/1294/trunk/osmdroid-android/src/main/java/org/osmdroid/api/IMapController.java
+END
