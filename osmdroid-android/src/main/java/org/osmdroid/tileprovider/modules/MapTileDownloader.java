@@ -15,9 +15,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.params.CoreProtocolPNames;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
 import org.osmdroid.http.HttpClientFactory;
 import org.osmdroid.tileprovider.BitmapPool;
 import org.osmdroid.tileprovider.MapTile;
@@ -32,7 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.util.Log;
 
 /**
  * The {@link MapTileDownloader} loads tiles from an HTTP server. It saves downloaded tiles to an
@@ -185,10 +181,7 @@ public class MapTileDownloader extends MapTileModuleProviderBase {
 				}
 
 				final HttpClient client = HttpClientFactory.createHttpClient();
-				
 				final HttpUriRequest head = new HttpGet(tileURLString);
-				head.setHeader("User-Agent", 
-				        "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)");
 				final HttpResponse response = client.execute(head);
 
 				// Check to see if we got success
