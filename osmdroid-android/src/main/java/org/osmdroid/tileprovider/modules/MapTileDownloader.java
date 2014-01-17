@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -174,6 +175,7 @@ public class MapTileDownloader extends MapTileModuleProviderBase {
 
 				if (DEBUGMODE) {
 					logger.debug("Downloading Maptile from url: " + tileURLString);
+					logger.debug("HEADER: " + tileURLString);
 				}
 
 				if (TextUtils.isEmpty(tileURLString)) {
@@ -181,7 +183,16 @@ public class MapTileDownloader extends MapTileModuleProviderBase {
 				}
 
 				final HttpClient client = HttpClientFactory.createHttpClient();
+				
 				final HttpUriRequest head = new HttpGet(tileURLString);
+				head.setHeader("User-Agent", 
+				        "Mozilla/5.0 (rv:26.0) Gecko/20100101 Firefox/26.0");
+				if (DEBUGMODE) {
+				    logger.debug("Downloading Maptile with headers: ");
+				    for (Header header: head.getAllHeaders()) {
+				        logger.debug("-- " + header.getName() + ": " + header.getValue());
+				    }
+				}
 				final HttpResponse response = client.execute(head);
 
 				// Check to see if we got success
