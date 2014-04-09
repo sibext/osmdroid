@@ -15,10 +15,6 @@ package org.osmdroid.views.overlay;
  * Change Log:
  * 		2010-10-08: Inclusion to osmdroid trunk
  *
- * License:
- * 		LGPL version 3
- * 		http://www.gnu.org/licenses/lgpl.html
- *
  * Usage:
  * <code>
  * MapView map = new MapView(...);
@@ -44,19 +40,17 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.constants.GeoConstants;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.MapView.Projection;
-import org.osmdroid.views.safecanvas.ISafeCanvas;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Picture;
 import android.graphics.Rect;
 import android.view.WindowManager;
 
-public class ScaleBarOverlay extends SafeDrawOverlay implements GeoConstants {
+public class ScaleBarOverlay extends Overlay implements GeoConstants {
 
 	// ===========================================================
 	// Fields
@@ -97,7 +91,6 @@ public class ScaleBarOverlay extends SafeDrawOverlay implements GeoConstants {
 	private Projection projection;
 
 	final private Rect mBounds = new Rect();
-	final private Matrix mIdentityMatrix = new Matrix();
 
 	private boolean centred = false;
 	private boolean adjustLength = false;
@@ -165,6 +158,16 @@ public class ScaleBarOverlay extends SafeDrawOverlay implements GeoConstants {
 
 		// set default max length to 1 inch
 		maxLength = 2.54f;
+	}
+
+	@Override
+	public boolean isHardwareAccelerated() {
+		return false;
+	}
+
+	@Override
+	public boolean isDrawingShadowLayer() {
+		return false;
 	}
 
 	// ===========================================================
@@ -333,8 +336,7 @@ public class ScaleBarOverlay extends SafeDrawOverlay implements GeoConstants {
 	// ===========================================================
 
 	@Override
-	public void drawSafe(final ISafeCanvas c, final MapView mapView, final boolean shadow) {
-
+	protected void draw(Canvas c, MapView mapView, boolean shadow) {
 		if (shadow) {
 			return;
 		}
@@ -370,8 +372,8 @@ public class ScaleBarOverlay extends SafeDrawOverlay implements GeoConstants {
 
 			mBounds.set(mBounds);
 			c.save();
-			c.setMatrix(mIdentityMatrix);
-			c.getWrappedCanvas().drawPicture(scaleBarPicture, mBounds);
+			mapView.invertCanvas(c);
+			c.drawPicture(scaleBarPicture, mBounds);
 			c.restore();
 		}
 	}

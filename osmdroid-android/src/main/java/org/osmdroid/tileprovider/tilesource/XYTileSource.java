@@ -10,7 +10,7 @@ public class XYTileSource extends OnlineTileSourceBase {
 
 	public XYTileSource(final String aName, final string aResourceId, final int aZoomMinLevel,
 			final int aZoomMaxLevel, final int aTileSizePixels, final String aImageFilenameEnding,
-			final String... aBaseUrl) {
+			final String[] aBaseUrl) {
 		super(aName, aResourceId, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels,
 				aImageFilenameEnding, aBaseUrl);
 	}

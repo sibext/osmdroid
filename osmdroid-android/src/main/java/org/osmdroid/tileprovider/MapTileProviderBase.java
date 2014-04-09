@@ -304,7 +304,7 @@ public abstract class MapTileProviderBase implements IMapTileProviderCallback,
 				final Bitmap bitmap = mNewTiles.remove(tile);
 				final ExpirableBitmapDrawable drawable = new ReusableBitmapDrawable(bitmap);
 				drawable.setState(new int[] { ExpirableBitmapDrawable.EXPIRED });
-				Drawable existingTile = mTileCache.getMapTile(tile);
+				final Drawable existingTile = mTileCache.getMapTile(tile);
 				if (existingTile == null || ExpirableBitmapDrawable.isDrawableExpired(existingTile))
 					putExpiredTileIntoCache(new MapTileRequestState(tile,
 							new MapTileModuleProviderBase[0], null), drawable);
@@ -335,17 +335,19 @@ public abstract class MapTileProviderBase implements IMapTileProviderCallback,
 				Bitmap bitmap = BitmapPool.getInstance().obtainSizedBitmapFromPool(
 						pTileSizePx, pTileSizePx);
 				if (bitmap == null)
-					bitmap = Bitmap.createBitmap(pTileSizePx, pTileSizePx,
-						Bitmap.Config.ARGB_8888);
+					bitmap = Bitmap.createBitmap(pTileSizePx, pTileSizePx, Bitmap.Config.ARGB_8888);
 
 				final Canvas canvas = new Canvas(bitmap);
 				final boolean isReusable = oldDrawable instanceof ReusableBitmapDrawable;
+				final ReusableBitmapDrawable reusableBitmapDrawable =
+						isReusable ? (ReusableBitmapDrawable) oldDrawable : null;
 				boolean success = false;
 				if (isReusable)
-					((ReusableBitmapDrawable) oldDrawable).beginUsingDrawable();
+					reusableBitmapDrawable.beginUsingDrawable();
 				try {
-					if (!isReusable || ((ReusableBitmapDrawable) oldDrawable).isBitmapValid()) {
-						final Bitmap oldBitmap = ((BitmapDrawable) oldDrawable).getBitmap();
+					if (!isReusable || reusableBitmapDrawable.isBitmapValid()) {
+						final BitmapDrawable bitmapDrawable = (BitmapDrawable) oldDrawable;
+						final Bitmap oldBitmap = bitmapDrawable.getBitmap();
 						canvas.drawBitmap(oldBitmap, mSrcRect, mDestRect, null);
 						success = true;
 						if (DEBUGMODE) {
@@ -356,7 +358,7 @@ public abstract class MapTileProviderBase implements IMapTileProviderCallback,
 					}
 				} finally {
 					if (isReusable)
-						((ReusableBitmapDrawable) oldDrawable).finishUsingDrawable();
+						reusableBitmapDrawable.finishUsingDrawable();
 				}
 				if (success)
 					mNewTiles.put(pTile, bitmap);

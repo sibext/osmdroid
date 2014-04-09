@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import microsoft.mappoint.TileSystem;
+
 import org.metalev.multitouch.controller.MultiTouchController;
 import org.metalev.multitouch.controller.MultiTouchController.MultiTouchObjectCanvas;
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
@@ -14,7 +16,6 @@ import org.metalev.multitouch.controller.MultiTouchController.PositionAndScale;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.api.IMap;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.api.IMapView;
 import org.osmdroid.api.IProjection;
@@ -37,6 +38,8 @@ import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayManager;
 import org.osmdroid.views.overlay.TilesOverlay;
 import org.osmdroid.views.safecanvas.ISafeCanvas;
+import org.osmdroid.views.safecanvas.ISafeCanvas.UnsafeCanvasHandler;
+import org.osmdroid.views.safecanvas.SafeTranslatedCanvas;
 import org.osmdroid.views.util.constants.MapViewConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,8 +62,6 @@ import android.view.ViewGroup;
 import android.widget.Scroller;
 import android.widget.ZoomButtonsController;
 import android.widget.ZoomButtonsController.OnZoomListener;
-
-import microsoft.mappoint.TileSystem;
 
 public class MapView extends ViewGroup implements IMapView, MapViewConstants,
 		MultiTouchObjectCanvas<Object> {
@@ -348,7 +349,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants,
 			final IGeoPoint centerGeoPoint = TileSystem.PixelXYToLatLong(getScrollX()
 					+ worldSize_current_2, getScrollY() + worldSize_current_2, curZoomLevel, null);
 			final Point centerPoint = TileSystem.LatLongToPixelXY(
-					centerGeoPoint.getLatitudeE6() / 1E6, centerGeoPoint.getLongitudeE6() / 1E6,
+					centerGeoPoint.getLatitude(), centerGeoPoint.getLongitude(),
 					newZoomLevel, null);
 			scrollTo(centerPoint.x - worldSize_new_2, centerPoint.y - worldSize_new_2);
 		} else if (newZoomLevel < curZoomLevel) {
@@ -801,6 +802,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants,
 
 	public void onDetach() {
 		this.getOverlayManager().onDetach(this);
+		mTileProvider.detach();
 	}
 
 	@Override
@@ -998,6 +1000,27 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants,
 	public void setBackgroundColor(final int pColor) {
 		mMapOverlay.setLoadingBackgroundColor(pColor);
 		invalidate();
+	}
+
+	/**
+	 * This will "invert" the canvas for an overlay so that it is appropriate for fixed-screen
+	 * drawing where (0, 0) is the upper-left corner of the screen. You can use this to draw to a
+	 * fixed position on the screen regardless of the scroll position.<br/>
+	 * <br/>
+	 * <b>Note:</b> You should save the state of your canvas before calling this method and restore
+	 * it when you are done drawing. To use this with a {@link SafeTranslatedCanvas} you should use
+	 * it with {@link SafeTranslatedCanvas#getUnsafeCanvas(UnsafeCanvasHandler)}.
+	 * 
+	 * @param c
+	 *            a canvas which will be modified
+	 */
+	public void invertCanvas(final Canvas c) {
+		c.rotate(-mapOrientation, mProjection.getScreenRect().exactCenterX(), mProjection
+				.getScreenRect().exactCenterY());
+		c.scale(1 / mMultiTouchScale, 1 / mMultiTouchScale, mMultiTouchScalePoint.x,
+				mMultiTouchScalePoint.y);
+		c.translate(getScrollX(), getScrollY());
+		c.translate(-getWidth() / 2, -getHeight() / 2);
 	}
 
 	@Override
@@ -1330,8 +1353,8 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants,
 		public Point toMapPixels(final IGeoPoint in, final Point reuse) {
 			final Point out = reuse != null ? reuse : new Point();
 			TileSystem.LatLongToPixelXY(
-							in.getLatitudeE6() / 1E6,
-							in.getLongitudeE6() / 1E6,
+							in.getLatitude(),
+							in.getLongitude(),
 							getZoomLevel(), out);
 			out.offset(offsetX, offsetY);
 			if (Math.abs(out.x - getScrollX()) >
@@ -1365,12 +1388,10 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants,
 		 *            just pass null if you do not have a Point to be 'recycled'.
 		 * @return intermediate value to be stored and passed to toMapPixelsTranslated.
 		 */
-		public Point toMapPixelsProjected(final int latituteE6, final int longitudeE6,
-				final Point reuse) {
+		public Point toMapPixelsProjected(final int latituteE6, final int longitudeE6, final Point reuse) {
 			final Point out = reuse != null ? reuse : new Point();
 
-			TileSystem
-					.LatLongToPixelXY(latituteE6 / 1E6, longitudeE6 / 1E6, MAXIMUM_ZOOMLEVEL, out);
+			TileSystem.LatLongToPixelXY(latituteE6 * 1E-6, longitudeE6 * 1E-6, MAXIMUM_ZOOMLEVEL, out);
 			return out;
 		}
 
